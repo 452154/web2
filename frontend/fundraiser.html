@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+<div class="panel">
+    <aside class="aside">
+        <div class="menus">
+            <div>
+                <a href="./home.html">HOME</a>
+            </div>
+            <div>
+                <a href="./fundraiser.html">FUNDRAISER</a>
+            </div>
+        </div>
+    </aside>
+    <main class="main">
+        <div class="system-name">Crowdfunding system</div>
+        <div>
+            <select class="select-item" value=""></select>
+            <select class="select-item" value=""></select>
+            <select class="select-item" value=""></select>
+            <button class="search">search</button>
+            <button class="reset">reset</button>
+        </div>
+        <table border="1" class="table">
+            <thead>
+            <tr>
+                <th>index</th>
+                <th>Caption</th>
+                <th>City</th>
+                <th>Organizer</th>
+                <th>Category</th>
+                <th>Target Funding</th>
+                <th>Current Funding</th>
+                <th>Operation</th>
+            </tr>
+            </thead>
+            <tbody class="tbody"></tbody>
+        </table>
+        <div class="nodata">no data</div>
+        <div class="fundraiser-info">
+            <div class="info-item">
+                <img src="./imgs/img2.png" alt="">
+                <div class="name">We assist in answering questions and initiating fundraising throughout the process</div>
+            </div>
+            <div class="info-item">
+                <img src="./imgs/img1.png" alt="">
+                <div class="name">Join us, let love pass, let dreams soar</div>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+<script src="js/req.js"></script>
+<script>
+    // select item list
+    const selectItems = document.getElementsByClassName('select-item');
+    // get category
+    function getCategory() {
+        selectItems[0].innerHTML = '';
+        selectItems[0].innerHTML = '<option selected value="">category</option>'
+        httpGet('category-data').then(data => {
+            const arr = [];
+            for (let i = 0; i < data.length; i++) {
+                const optionEl = document.createElement('option');
+                optionEl.innerText = data[i].name;
+                optionEl.value =  data[i].category_id;
+                arr.push(optionEl);
+            }
+            for (let i = 0; i < arr.length; i++) {
+                selectItems[0].appendChild(arr[i]);
+            }
+        });
+    }
+    // get organizer
+    function getOrganizer() {
+        selectItems[1].innerHTML = '';
+        selectItems[1].innerHTML = '<option selected value="">organizer</option>'
+        httpGet('organizer-data').then(data => {
+            const arr = [];
+            for (let i = 0; i < data.length; i++) {
+                const optionEl = document.createElement('option');
+                optionEl.innerText = data[i].organizer;
+                optionEl.value =  data[i].organizer;
+                arr.push(optionEl);
+            }
+            for (let i = 0; i < arr.length; i++) {
+                selectItems[1].appendChild(arr[i]);
+            }
+        });
+    }
+    // get city
+    function getCity() {
+        selectItems[2].innerHTML = '';
+        selectItems[2].innerHTML = '<option selected value="">city</option>'
+        httpGet('city-data').then(data => {
+            const arr = [];
+            for (let i = 0; i < data.length; i++) {
+                const optionEl = document.createElement('option');
+                optionEl.innerText = data[i].city;
+                optionEl.value =  data[i].city;
+                arr.push(optionEl);
+            }
+            for (let i = 0; i < arr.length; i++) {
+                selectItems[2].appendChild(arr[i]);
+            }
+        });
+    }
+    // get data by filter
+    function getDataByFilter() {
+        httpGet('search-data', {
+            category_id: selectItems[0].value,
+            organizer: selectItems[1].value,
+            city: selectItems[2].value
+        }).then(data => {
+            setNodes(data);
+        });
+    }
+
+    // set nodes
+    function setNodes(data) {
+        const tableBody = document.getElementsByClassName('tbody')[0];
+        tableBody.innerHTML = '';
+        const noData = document.getElementsByClassName('nodata')[0];
+        if (!!data.length) {
+            console.log(noData);
+            noData.style.display = 'none';
+        } else {
+            noData.style.display = 'block';
+        }
+        for (let i = 0; i < data.length; i++) {
+            const trNode = document.createElement('tr');
+            trNode.innerHTML = `
+                <td>${data[i].fundraiser_id}</td>
+                <td>${data[i].caption}</td>
+                 <td>${data[i].city}</td>
+                <td>${data[i].organizer}</td>
+                <td>${data[i].name}</td>
+                <td>${data[i].target_funding}</td>
+                <td>${data[i].current_funding}</td>
+                <td><a href="./detail.html?id=${data[i].fundraiser_id}">VIEW</a></td>
+            `;
+            tableBody.appendChild(trNode);
+        }
+    }
+
+    // reset data
+    function resetAllFilter() {
+        selectItems[0].value = '';
+        selectItems[1].value = '';
+        selectItems[2].value = '';
+        getDataByFilter();
+    }
+
+    document.getElementsByClassName('search')[0].onclick = getDataByFilter;
+    document.getElementsByClassName('reset')[0].onclick = resetAllFilter;
+
+    getDataByFilter();
+    getCategory();
+    getOrganizer();
+    getCity();
+</script>
+</html>

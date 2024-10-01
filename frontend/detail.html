@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CrowdFunding</title>
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+        table {
+            font-size: 18px;
+        }
+        .btns {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-top: 70px;
+        }
+        .detail-content {
+            display: flex;
+            justify-content: space-between;
+        }
+        .img-wrapper{
+            text-align: center;
+        }
+        .img-wrapper img {
+            width: 400px;
+            height: 300px;
+        }
+        .system-intro {
+            margin-bottom: 30px;
+        }
+        table td {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="panel">
+    <aside class="aside">
+        <div class="menus">
+            <div>
+                <a href="./home.html">HOME</a>
+            </div>
+            <div>
+                <a href="./fundraiser.html">FUNDRAISER</a>
+            </div>
+        </div>
+    </aside>
+    <main class="main">
+        <div class="system-name">Crowdfunding system</div>
+        <div class="detail-content">
+            <div style="flex: 1">
+                <table border="1" style="width: 100%;">
+                    <tr>
+                        <td>caption</td>
+                        <td><span id="caption"></span></td>
+                    </tr>
+                    <tr>
+                        <td>city</td>
+                        <td><span id="city"></span></td>
+                    </tr>
+                    <tr>
+                        <td>organizer</td>
+                        <td><span id="organizer"></span></td>
+                    </tr>
+                    <tr>
+                        <td>category</td>
+                        <td><span id="category"></span></td>
+                    </tr>
+                    <tr>
+                        <td>target funding</td>
+                        <td><span id="target-funding"></span></td>
+                    </tr>
+                    <tr>
+                        <td>current funding</td>
+                        <td><span id="current-funding"></span></td>
+                    </tr>
+                </table>
+                <div class="btns">
+                    <button onclick="alert('This feature is under construction');" class="donation-btn">DONATION</button>
+                </div>
+            </div>
+            <div style="width: 450px;margin-left: 30px;">
+                <div class="system-intro">
+                    Join us, and let's make our dreams come true together.<br>
+                    Take a brave step and make a difference
+                </div>
+                <div class="img-wrapper">
+                    <img src="./imgs/img1.png" alt="">
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+<script src="js/req.js"></script>
+<script>
+    httpGet('search-detail', {
+        fundraiser_id: Number(location.href.split('=')[1])
+    }).then(data => {
+        // set data
+        const caption = document.getElementById('caption');
+        caption.innerText = data.caption;
+        const targetFunding = document.getElementById('target-funding');
+        targetFunding.innerText = data.target_funding;
+        const organizer = document.getElementById('organizer');
+        organizer.innerText = data.organizer;
+        const currentFunding = document.getElementById('current-funding');
+        currentFunding.innerText = data.current_funding;
+        const city = document.getElementById('city');
+        city.innerText = data.city;
+        const category = document.getElementById('category');
+        category.innerText = data.name;
+    });
+</script>
+</html>

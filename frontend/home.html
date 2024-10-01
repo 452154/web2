@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+<div class="home-wrapper">
+    <div class="system-name">Crowdfunding System</div>
+    <div class="menus">
+        <div>
+            <a href="./home.html">HOME</a>
+        </div>
+        <div>
+            <a href="./fundraiser.html">FUNDRAISER</a>
+        </div>
+    </div>
+    <div class="system-intro">
+        Join us, and let's make our dreams come true together.<br>
+        Take a brave step and make a difference
+    </div>
+    <div class="area-header">
+        Crowdfunding campaign information
+    </div>
+    <div class="info-list">
+        <div class="active-list"></div>
+        <div class="img-item">
+            <img src="./imgs/img1.png" alt="">
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/req.js"></script>
+<script>
+    getData();
+    function getData() {
+        httpGet('search-data', {
+            category_id: '',
+            organizer: '',
+            city: ''
+        }).then(data => {
+            setNodes(data);
+            console.log(data);
+        });
+    }
+    function setNodes(data) {
+        const oList = document.getElementsByClassName('active-list')[0];
+        for (let i = 0; i < 2; i++) {
+            const oDiv = document.createElement('div');
+            oDiv.className = 'active-item';
+            oDiv.innerHTML = `
+<a href="./detail.html?id=${data[i].fundraiser_id}">
+<div class="item-header">
+                    <div id="category">${data[i].name}</div>
+                    <div id="caption">${data[i].caption}</div>
+                </div>
+                <div style="display: flex;align-items: center">
+                <div id="current">$${data[i].current_funding}</div>
+                <div id="target">$${data[i].target_funding}</div>
+                </div>
+                <div id="city">${data[i].city}</div>
+                <div id="organizer">${data[i].organizer}</div>
+</a>
+
+            `;
+            oList.appendChild(oDiv);
+        }
+    }
+</script>
+</html>

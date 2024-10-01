@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body, html {
+    height: 100%;
+}
+.panel {
+    height: 100%;
+    display: flex;
+}
+.aside {
+    width: 188px;
+    height: 100%;
+    padding: 20px;
+    background-color: #b1f6e0;
+}
+.system-name {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%;
+    font-size: 24px;
+}
+.menus {
+    margin-top: 30px;
+}
+.menus div{
+    margin-bottom: 30px;
+}
+.main {
+    padding: 30px;
+    flex: 1;
+}
+.table{
+    margin-top: 20px;
+}
+.nodata{
+    color: red;
+    margin: 10px 0;
+    font-weight: bold;
+    display: none;
+}
+.home-wrapper{
+    width: 100%;
+    height: 100vh;
+    background: url("../imgs/bg.png") no-repeat;
+    background-size: 100% 100%;
+    padding: 30px;
+    box-sizing: border-box;
+}
+.system-intro {
+    text-align: center;
+    background: rgba( 255, 255, 255, 0.2);
+    padding: 5px;
+}
+.area-header{
+    margin: 40px 0;
+    font-weight: bold;
+    margin-left: 100px;
+}
+.info-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.img-item img {
+    width: 400px;
+    height: 300px;
+}
+.active-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex: 1;
+}
+.active-item {
+    background: rgba( 255, 255, 255, 0.4);
+    padding: 20px;
+}
+.item-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.home-wrapper #category {
+    background-color: rgba(10, 117, 220, 0.3);
+    color: #FFFFFF;
+    padding: 5px;
+    font-size: 12px;
+    margin-right: 5px;
+}
+#caption {
+    font-weight: bold;
+}
+#target {
+    color: #333333;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+#current {
+    color: orange;
+    font-weight: bold;
+    margin-right: 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.home-wrapper .menus {
+    margin-top: 30px;
+    position: absolute;
+    right: 40px;
+    top: 0px;
+    display: flex;
+    align-items: center;
+}
+.home-wrapper .menus div{
+    margin: 0 20px;
+}
+.fundraiser-info {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    width: 100%;
+    justify-content: space-evenly;
+}
+.fundraiser-info img{
+    width: 400px;
+    height: 300px;
+}
+.fundraiser-info .info-item {
+    width: 400px;
+}
+.fundraiser-info .info-item .name {
+    text-align: center;
+}
+.home-wrapper a {
+    text-decoration: none;
+    color: #333333;
+}
